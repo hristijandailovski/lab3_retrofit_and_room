@@ -2,9 +2,9 @@ package com.hfad.lab3_retrofit_and_room.retrofit
 
 import com.hfad.lab3_retrofit_and_room.model.Movie
 import com.hfad.lab3_retrofit_and_room.model.RemoteMovieDataSource
+import retrofit2.http.GET
 
 class RetrofitMovieDataSource(private val movieDbApi: MovieDbApi): RemoteMovieDataSource {
-
 
     override suspend fun search(query: String): List<Movie> {
         val movieResponse = movieDbApi.search(query)
