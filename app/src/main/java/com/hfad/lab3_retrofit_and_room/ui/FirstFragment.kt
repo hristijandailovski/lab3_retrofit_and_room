@@ -3,12 +3,13 @@ package com.hfad.lab3_retrofit_and_room.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.hfad.lab3_retrofit_and_room.R
 import com.hfad.lab3_retrofit_and_room.adapters.MovieAdapter
 import com.hfad.lab3_retrofit_and_room.databinding.FragmentFirstBinding
-import com.hfad.lab3_retrofit_and_room.model.Movie
+import com.hfad.lab3_retrofit_and_room.ui.viewmodels.MovieFoundByIdViewModel
 import com.hfad.lab3_retrofit_and_room.ui.viewmodels.MoviesViewModel
 import com.hfad.lab3_retrofit_and_room.ui.viewmodels.MoviesViewModelFactory
 
@@ -18,6 +19,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private var _binding:FragmentFirstBinding? =null
     private val binding get() = _binding!!
     private lateinit var moviesViewModel:MoviesViewModel
+    private lateinit var movieFoundByIdViewModel: MovieFoundByIdViewModel
+
+
 
     override fun onViewCreated(view:View, savedInstanceState:Bundle?){
         super.onViewCreated(view, savedInstanceState)
@@ -25,8 +29,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         val viewModelFactory = MoviesViewModelFactory(requireContext())
         moviesViewModel = ViewModelProvider(this,viewModelFactory)[MoviesViewModel::class.java]
+        movieFoundByIdViewModel=ViewModelProvider(requireActivity(),viewModelFactory)[MovieFoundByIdViewModel::class.java]
 
-        val adapter:MovieAdapter = MovieAdapter()
+        val adapter = MovieAdapter(parentFragmentManager=parentFragmentManager, movieFoundByIdViewModel = movieFoundByIdViewModel)
         binding.movieList.adapter= adapter
 
         moviesViewModel.getMovieLiveData().observe(viewLifecycleOwner){
@@ -40,6 +45,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 moviesViewModel.search(query)
             }
         }
+        moviesViewModel.listAll()
 
     }
 

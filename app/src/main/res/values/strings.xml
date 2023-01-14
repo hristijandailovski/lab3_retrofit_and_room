@@ -6,4 +6,5 @@
     <string name="search_movies">search...</string>
     <string name="please_enter_query">Please enter a keyword to search .</string>
     <string name="movie_poster">movie poster</string>
+    <string name="empty">"empty "</string>
 </resources>

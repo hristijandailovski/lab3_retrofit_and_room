@@ -17,8 +17,13 @@ class MoviesViewModel(private val movieRepository: MovieRepository): ViewModel()
     fun search(query:String){
         viewModelScope.launch(Dispatchers.IO) {
             val movies = movieRepository.queryMovies(query)
-            moviesLiveData.postValue(movies) //mora da e postvalue poradi drug thread
+             moviesLiveData.postValue(movies) //mora da e postvalue poradi drug thread
         }
     }
-
+    fun listAll(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val movies = movieRepository.listMovies()
+            moviesLiveData.postValue(movies)
+        }
+    }
 }
